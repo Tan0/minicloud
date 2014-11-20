@@ -1,0 +1,64 @@
+#Misc
+HOST_IP=10.239.48.36
+ADMIN_PASSWORD=password
+MYSQL_PASSWORD=root
+RABBIT_PASSWORD=password
+SERVICE_PASSWORD=password
+SERVICE_TOKEN=password
+
+#Enable Logging
+NO_UPDATE_REPOS=True
+DEST=/opt/stack
+SCREEN_LOGDIR=$DEST/logs/screen
+LOGFILE=$DEST/logs/stack.sh.log
+LOGDAYS=1
+#RECLONE=yes
+disable_service n-net
+enable_service q-svc
+enable_service q-agt
+enable_service q-dhcp
+#enable_service q-l3
+enable_service q-meta
+enable_service neutron
+enable_service ironic
+enable_service ir-api
+enable_service ir-cond
+# Optional, to enable tempest configuration as part of devstack
+enable_service tempest
+
+enable_service ceilometer-acompute ceilometer-acentral ceilometer-anotification ceilometer-collector
+enable_service ceilometer-alarm-notifier ceilometer-alarm-evaluator
+enable_service ceilometer-api
+
+#Write configs
+
+#Nova use ironic as driver
+VIRT_DRIVER=ironic
+
+#Neutron set Flat network
+Q_ML2_TENANT_NETWORK_TYPE=flat
+ENABLE_TENANT_TUNNELS=False
+PHYSICAL_NETWORK=physnet1
+OVS_PHYSICAL_BRIDGE=br-eth1
+Q_ML2_PLUGIN_TYPE_DRIVERS=flat
+Q_ML2_PLUGIN_MECHANISM_DRIVERS=openvswitch
+ENABLE_TENANT_VLANS=False
+ENABLE_ISOLATED_METADATA=True
+ENABLE_METADATA_NETWORK=True
+Q_USE_PROVIDER_NETWORKING=True
+PUBLIC_INTERFACE=eth1
+FLAT_NETWORK_BRIDGE=br-eth1
+PROVIDER_NETWORK_TYPE=flat
+NETWORK_GATEWAY=30.168.98.1
+FIXED_RANGE=30.168.98.0/24
+
+#Ironic running on hardware
+IRONIC_HARDWARE=True
+IRONIC_BAREMETAL_BASIC_OPS=True
+IRONIC_DEPLOY_DRIVER=pxe_ipmitool
+IRONIC_IPMI_USERNAME=ADMIN
+IRONIC_IPMI_PASSWD=123456
+IRONIC_HWINFO_FILE=/tmp/hwinfo
+IRONIC_USR_KERNEL_PATH=/home/minicloud/images/oat-client.vmlinuz
+IRONIC_USR_RAMDISK_PATH=/home/minicloud/images/oat-client.initrd
+IRONIC_USR_DISK_PATH=/home/minicloud/images/oat-client.qcow2
